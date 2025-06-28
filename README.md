@@ -4,8 +4,8 @@ This project fetches live stock prices (e.g., MSFT) from the [Finnhub API](https
 
 ---
 ## Data Pipeline Architecture
-![Untitled design](https://github.com/user-attachments/assets/d5ea9038-efef-4775-9868-8982b3622cf3)
 
+![Real-Time Stock Price Tracker with Kafka + Bokeh + PySpark](https://github.com/user-attachments/assets/7e4c5fe2-03ab-44a0-bad4-8ef44e170a1d)
 
 ## 🧩 Components
 
