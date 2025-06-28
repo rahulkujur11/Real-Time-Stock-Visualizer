@@ -8,7 +8,7 @@ This project fetches live stock prices (e.g., MSFT) from the [Finnhub API](https
 ![recording-2025-06-28-165526_zxvA9WuL-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/90e15eee-21d1-4d8d-8065-5aaef4a1faef)
 
 ## Real Time Dashboard
-https://github.com/user-attachments/assets/23384763-15f4-4384-a3c6-5f5e19f6ca1f
+![dashboard](https://github.com/user-attachments/assets/e27f564a-d40b-4d66-9cce-775342ea406e)
 
 ## 🧩 Components
 
