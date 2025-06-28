@@ -60,12 +60,8 @@ bokeh serve --show bokeh_consumer.py
 ```bash
 spark-submit spark_streaming_consumer.py
 ```
-### 1.  Run the Kafka Producer
-```bash
-python kafka_producer.py
-```
 
-🔧 Configuration
+### 🔧 Configuration
 Symbol: Set in kafka_producer.py (e.g., symbol = 'MSFT')
 
 API Key: Get one from Finnhub.io and paste it in kafka_producer.py
