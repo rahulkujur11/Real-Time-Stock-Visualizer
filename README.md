@@ -61,7 +61,7 @@ bokeh serve --show bokeh_consumer.py
 spark-submit spark_streaming_consumer.py
 ```
 
-### 🔧 Configuration
+## 🔧 Configuration
 Symbol: Set in kafka_producer.py (e.g., symbol = 'MSFT')
 
 API Key: Get one from Finnhub.io and paste it in kafka_producer.py
@@ -70,20 +70,20 @@ Kafka Topic: stock_prices (can be changed in both producer and consumer)
 
 )
 
-📊 Sample Output (Console)
+## 📊 Sample Output (Console)
 ```bash
 ✅ Plotting 495.23 at 2025-06-28 13:45:01
 📈 Streaming at 2025-06-28 13:45:01: {'time': [datetime.datetime(2025, 6, 28, 13, 45, 1)], 'price': [495.23]}
 ```
 
-📎 File Structure
+## 📎 File Structure
 ```bash
 ├── kafka_producer.py             # Fetches and sends stock data to Kafka
 ├── bokeh_consumer.py             # Live dashboard using Bokeh
 ├── spark_streaming_consumer.py   # (Optional) PySpark consumer
 ├── README.md
 ```
-💡 Ideas for Extension
+## 💡 Ideas for Extension
 Add historical context or average lines
 
 Integrate alerting for price thresholds
