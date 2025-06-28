@@ -2,9 +2,10 @@
 
 ## Data Pipeline Architecture
 
-  
+![Untitled design](https://github.com/user-attachments/assets/4f7d898e-d7f4-471f-95ed-1326427d7a66)
 
-![](https://drive.google.com/file/d/1YZMFsSF0_z1GiNvDiinD0gXnz5i58wOG/view?usp=drive_link)
+
+[![](https://drive.google.com/file/d/1YZMFsSF0_z1GiNvDiinD0gXnz5i58wOG/view?usp=drive_link)](https://drive.google.com/file/d/1YZMFsSF0_z1GiNvDiinD0gXnz5i58wOG/view?usp=drive_link)
 
 -   ### API
    
