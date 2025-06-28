@@ -1,155 +1,100 @@
-# Real-Time Data Pipeline Using Kafka and Spark
+# 📈 Real-Time Stock Price Tracker with Kafka + Bokeh + PySpark
 
-## Data Pipeline Architecture
+This project fetches live stock prices (e.g., MSFT) from the [Finnhub API](https://finnhub.io/), publishes them to a Kafka topic, and visualizes them in real time using Bokeh. Optionally, it includes a PySpark Streaming consumer for scalable backend processing.
 
-![Untitled design](https://github.com/user-attachments/assets/4f7d898e-d7f4-471f-95ed-1326427d7a66)
+---
+
+## 🧩 Components
+
+### 1. Kafka Producer
+- **Language**: Python
+- **Task**: Polls Finnhub API every second and publishes stock price data to a Kafka topic.
+
+### 2. Kafka + Bokeh Consumer
+- **Language**: Python
+- **Task**: Listens to the Kafka topic, updates a live chart with real-time stock prices.
+
+### 3. PySpark Streaming App (Optional)
+- **Language**: PySpark
+- **Task**: Consumes Kafka stream, parses JSON data, and optionally performs transformations or writes to sinks like console, file, or databases.
+
+---
+
+## 🛠️ Setup Instructions
+
+### Prerequisites
+
+- Python 3.7+
+- Kafka & Zookeeper (local or remote)
+- Java 8+
+- PySpark (`pip install pyspark`)
+- Bokeh (`pip install bokeh`)
+- Kafka-Python (`pip install kafka-python`)
+- Requests (`pip install requests`)
+
+---
+
+## 🚀 Running the Project
+
+### 1. Start Kafka + Zookeeper
+
+```bash
+# Zookeeper
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+# Kafka Broker
+bin/kafka-server-start.sh config/server.properties
+
+# Create topic
+bin/kafka-topics.sh --create --topic stock_prices --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+```
+### 2.  Run the Kafka Producer
+```bash
+python kafka_producer.py
+```
+### 3.  Run the Bokeh Consumer (Live Plot)
+```bash
+bokeh serve --show bokeh_consumer.py
+```
+### 4.  Run PySpark Streaming Consumer
+```bash
+spark-submit spark_streaming_consumer.py
+```
+### 1.  Run the Kafka Producer
+```bash
+python kafka_producer.py
+```
+
+🔧 Configuration
+Symbol: Set in kafka_producer.py (e.g., symbol = 'MSFT')
+
+API Key: Get one from Finnhub.io and paste it in kafka_producer.py
+
+Kafka Topic: stock_prices (can be changed in both producer and consumer)
+
+)
+
+📊 Sample Output (Console)
+```bash
+✅ Plotting 495.23 at 2025-06-28 13:45:01
+📈 Streaming at 2025-06-28 13:45:01: {'time': [datetime.datetime(2025, 6, 28, 13, 45, 1)], 'price': [495.23]}
+```
+
+📎 File Structure
+```bash
+├── kafka_producer.py             # Fetches and sends stock data to Kafka
+├── bokeh_consumer.py             # Live dashboard using Bokeh
+├── spark_streaming_consumer.py   # (Optional) PySpark consumer
+├── README.md
+```
+💡 Ideas for Extension
+Add historical context or average lines
+
+Integrate alerting for price thresholds
+
+Use a WebSocket or REST API for front-end dashboard updates
 
 
-[![](https://drive.google.com/file/d/1YZMFsSF0_z1GiNvDiinD0gXnz5i58wOG/view?usp=drive_link)](https://drive.google.com/file/d/1YZMFsSF0_z1GiNvDiinD0gXnz5i58wOG/view?usp=drive_link)
 
--   ### API
-   
-	-  	 The API mimics the water quality sensor data similar to the one shared [here](https://data.world/cityofchicago/beach-water-quality-automated-sensors).
-	    
-	-   The implementation is done in flask web framework and the response is as follows:
-	    
 
-		‘2020-02-17T11:12:58.765969 26.04 540.1 13.12 Montrose_Beach 758028’
 
-		![](https://lh6.googleusercontent.com/TDsc79yE-D_GBX7hFNrbgGlnP81TaRvBESeE2JvyEb8VaFzO_h1jNezTLsTg8CRsjfMtJOFrxPJi0EkqTOuRXlpP6U0SwuSMtFg4_rYYzNF5iASjx3MFIM4jKe5fjTKlVbAm4OMK)
-
--   ### Kafka Producer (Topic: RawSensorData)
-    
-	
-	-   The data from the API stream is pushed to Kafka Producer under topic: RawSensorData
-	    
-
-  
-
-		![](https://lh6.googleusercontent.com/KqaLvzLkdC2aYar0UeQ9raBgJgf0QXLyGe9GFr6z0uT6O-sx4ZizobVCdgIMTSZ8itXtiHfIThLHc5FoAwXtkA2U_lVZRJDQdLNvcNPKAIfS1Sa6GuiaTcCiABlpSlnhrfoSqn1s)
-
--   ### Apache Spark and Kafka Consumer (Topic: CleanSensorData)
-    
-
-	-   The data under the topic RawSensorData is streamed through Kafka Consumer. The data is then structured and validated using Spark.
-	    
-
-	  
-
-	-   The cleaned data is then pushed to MongoDB and Kafka Producer under topic: CleanSensorData
-    
-
-  
-
-		![](https://lh6.googleusercontent.com/DBMkx3tX90NCtokgNYT4BkjJGujCyeZk08X4w99vo2zfsBN9Yz1YGtb38Tcc3F6_HtMbML9NLVcHPFW310MDSSLWg8G8KoTuo-sC00aApDdNW9ql1ny605pwV6r5DS-Y5D325elU)
-
--   ### MongoDB
-    
-
-	-   The structured data is pushed to MongoDB collection with the following schema:
-	    
-		```markdown
-		| Keys             | Data Type |
-		|------------------|-----------|
-		| _id              | Object Id |
-		| Beach            | String    |
-		| MeasurementID    | long      |
-		| BatteryLife      | Double    |
-		| RawData          | String    |
-		| WaterTemperature | Double    |
-		| Turbidity        | Double    |
-		| TimeStamp        | timestamp |
-		```  
-  
-  
-
--   ### Realtime Dashboard
-    
-
-	-   The dashboard is implemented in the bokeh visualization library and data is streamed using Kafka Consumer under topic CleanSensorData.
-	    
-
-		![](https://lh5.googleusercontent.com/qtt7B4EC1FCRpqWreTOrk74gAXTDvtJ3TxTKs6KWaAbtB_5MZ5-4-GSJYkbuLGRHMEUK5Gzp4njgEiklshdTs-LbCAhOeI-u96k5g9vf0IU6Av_RQx0CiR1PXY4jbMHkmesMnNhM)
-
-  
-
-## How to run the code
-
-  
-
--   #### Start the API (port: 3030)
-    
-
-  		 python sensor.py
-	    
-
-  
-
--   #### Start Zookeeper
-    
-
-		 bash /opt/zookeeper-3.4.14/bin/zkServer.sh start
-    
-
-  
-
--   #### Start Kafka
-    
-
-		bin/kafka-server-start.sh config/server.properties
-    
-
-  
-
--   #### Create RawSensorData Topic
-    
-
-		   ./kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic RawSensorData
-    
-
-  
-
--   #### Create CleanSensorData Topic
-    
-
-		 ./kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic CleanSensorData
-    
-
-  
-
--  #### Push Data From API Stream to Kafka Topic: RawSensorData
-    
-
-		python push_data_to_kafka.py
-    
-
-  
-
--   #### Structure and Validate Data, Push To MongoDB and Kafka Topic CleanSensorData
-    
-
-		  ./bin/spark-submit structure_validate_store.py
-    
-
-  
-
--  #### View RawSensorData Topic
-    
-
-		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic RawSensorData --from-beginning
-    
-
-  
-
--   #### View CleanSensorData Topic
-    
-
-		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic CleanSensorData --from-beginning
-    
-
-  
-
--   #### Real-Time DashBoard - Visualization
-    
-
-		bokeh serve --show dashboard.py
