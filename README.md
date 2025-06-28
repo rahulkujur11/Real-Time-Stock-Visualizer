@@ -3,6 +3,9 @@
 This project fetches live stock prices (e.g., MSFT) from the [Finnhub API](https://finnhub.io/), publishes them to a Kafka topic, and visualizes them in real time using Bokeh. Optionally, it includes a PySpark Streaming consumer for scalable backend processing.
 
 ---
+## Data Pipeline Architecture
+![Untitled design](https://github.com/user-attachments/assets/d5ea9038-efef-4775-9868-8982b3622cf3)
+
 
 ## 🧩 Components
 
